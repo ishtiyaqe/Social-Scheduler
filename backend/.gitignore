@@ -1,0 +1,9 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+env/
+env
+__pycache__/
+__pycache__
+uploads/
+uploads
