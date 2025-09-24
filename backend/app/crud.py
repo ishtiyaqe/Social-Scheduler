@@ -3,14 +3,13 @@ from . import models
 from datetime import datetime
 from typing import List
 
-def create_scheduled_post(db: Session, text: str, image_path: str, platforms: List[str], scheduled_time: datetime, price: float = None):
+def create_scheduled_post(db: Session, text: str, image_path: str, platforms: List[str], scheduled_time: datetime):
     p = models.ScheduledPost(
         text=text,
         image_path=image_path,
         platforms=",".join(platforms),
         scheduled_time=scheduled_time,
-        status="pending",
-        price=price
+        status="pending"
     )
     db.add(p)
     db.commit()

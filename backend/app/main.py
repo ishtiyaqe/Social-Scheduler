@@ -101,7 +101,6 @@ def list_posts(db: Session = Depends(get_db)):
             scheduled_time=p.scheduled_time,
             status=p.status,
             result=p.result,
-            price=p.price,
             created_at=p.created_at
         ))
     return result
@@ -111,7 +110,6 @@ def list_posts(db: Session = Depends(get_db)):
 def update_post(
     post_id: int,
     text: str = Form(...),
-    price: Optional[float] = Form(None),
     platforms: Optional[str] = Form(None),  # optional comma-separated string
     scheduled_time: Optional[str] = Form(None),  # optional ISO datetime string
     image: Optional[UploadFile] = File(None),
@@ -130,9 +128,6 @@ def update_post(
     # Always update text
     post.text = text
 
-    # Update optional fields only if provided
-    if price is not None:
-        post.price = price
 
     if platforms is not None:
         post.platforms = platforms  # store as comma-separated string
@@ -169,7 +164,6 @@ def get_post(post_id: int, db: Session = Depends(get_db)):
         scheduled_time=post.scheduled_time,
         status=post.status,
         result=post.result,
-        price=post.price,
         created_at=post.created_at
     )
 
@@ -178,7 +172,6 @@ def get_post(post_id: int, db: Session = Depends(get_db)):
 def save_customization(
     product: str = Form(...),
     text: str = Form(...),
-    price: float = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
@@ -195,8 +188,7 @@ def save_customization(
         text=f"Customization for {product}: {text}",
         image_path=image_path,
         platforms=["custom"],
-        scheduled_time=datetime.utcnow(),
-        price=price
+        scheduled_time=datetime.utcnow()
     )
     return {"ok": True, "id": new.id}
 

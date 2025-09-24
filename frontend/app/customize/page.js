@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { use, useState } from "react";
 import ProductPreview from "../components/ProductPreview";
 import axios from "axios";
 
